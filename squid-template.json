@@ -168,6 +168,11 @@
                                         "name": "http",
                                         "containerPort": 8080,
                                         "protocol": "TCP"
+                                    },
+				    {
+                                        "name": "squid",
+                                        "containerPort": 3128,
+                                        "protocol": "TCP"
                                     }
                                 ]
                             }
