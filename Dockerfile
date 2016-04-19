@@ -1,4 +1,4 @@
-FROM rhel7
+FROM centos:latest
 MAINTAINER kilimandjango
 
 # Set ENV to use in the assemble script
