@@ -1,4 +1,4 @@
-IMAGE_NAME = squid-centos7
+IMAGE_NAME = squid-openshift
 
 build:
 	docker build -t $(IMAGE_NAME) .
