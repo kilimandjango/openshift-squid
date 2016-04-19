@@ -30,13 +30,13 @@ COPY ./etc/squid.conf /etc/squid/squid.conf
 COPY ./etc/blockwebsites.lst /etc/squid/blockwebsites.lst
 
 # Drop the root user and make user 1001 to owner of /etc/squid
-RUN chown -R 1001:1001 /etc/squid
+#RUN chown -R 1001:1001 /etc/squid
 
 # Set the default user for the image, the user itself was created in the base image
-USER 1001
+#USER 1001
 
 # Expose container port
 EXPOSE 3128
 
 # Set the default CMD to print the usage of the image if someone does the docker run
-CMD ["usage"]
+#CMD ["usage"]
