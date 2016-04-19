@@ -1,6 +1,12 @@
 FROM centos:latest
 MAINTAINER kilimandjango
 
+# Set ENV to use in the assemble script
+ENV SQUID_VERSION=3.3.8 \
+    SQUID_CACHE_DIR=/var/spool/squid3 \ 
+    SQUID_LOG_DIR=/var/log/squid3 \
+    SQUID_USER=1001
+
 # First update OS
 RUN yum -y update
 
@@ -20,10 +26,10 @@ LABEL io.openshift.s2i.scripts-url=image:///usr/local/sti
 COPY ./.sti/bin/ /usr/local/sti
 
 # Copy custom squid.conf to conf directory
-COPY ./etc/squid.conf /etc/squid/squid.conf
+COPY ./etc/squid.conf /etc/squid3/squid.conf
 
 # Drop the root user and make user 1001 to owner of /etc/squid
-RUN chown -R 1001:1001 /etc/squid
+RUN chown -R 1001:1001 /etc/squid3
 
 # Set the default user for the image, the user itself was created in the base image
 USER 1001
