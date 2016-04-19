@@ -1,4 +1,4 @@
-FROM centos:latest
+FROM registry.access.redhat.com/rhel7
 MAINTAINER kilimandjango
 
 # Set ENV to use in the assemble script
