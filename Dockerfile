@@ -2,10 +2,6 @@ FROM rhel7
 MAINTAINER kilimandjango
 
 # Set ENV to use in the assemble script
-ENV SQUID_VERSION=3.3.8 \
-    SQUID_CACHE_DIR=/var/spool/squid \ 
-    SQUID_LOG_DIR=/var/log/squid \
-    SQUID_USER=1001
 
 # First update OS
 RUN yum -y update
@@ -14,16 +10,10 @@ RUN yum -y update
 RUN yum -y install squid && systemctl enable squid && yum clean -y all
 
 # Set labels used in OpenShift to describe the builder images
-LABEL io.k8s.description="Platform for serving fancy proxy services" \
-      io.k8s.display-name="Squid Proxy" \
-      io.openshift.expose-services="3128" \
-      io.openshift.tags="builder,squid"
 
 # Although this is defined in openshift/base-centos7 image it's repeated here
 # to make it clear why the following COPY operation is happening
-LABEL io.openshift.s2i.scripts-url=image:///usr/local/sti
 # Copy the S2I scripts from ./.sti/bin/ to /usr/local/sti
-COPY ./.sti/bin/ /usr/local/sti
 
 # Copy custom squid.conf and blockwebsites.lst to conf directory
 COPY ./etc/squid.conf /etc/squid/squid.conf
