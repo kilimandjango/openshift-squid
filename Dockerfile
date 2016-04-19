@@ -25,8 +25,9 @@ LABEL io.openshift.s2i.scripts-url=image:///usr/local/sti
 # Copy the S2I scripts from ./.sti/bin/ to /usr/local/sti
 COPY ./.sti/bin/ /usr/local/sti
 
-# Copy custom squid.conf to conf directory
+# Copy custom squid.conf and blockwebsites.lst to conf directory
 COPY ./etc/squid.conf /etc/squid/squid.conf
+COPY ./etc/blockwebsites.lst /etc/squid/blockwebsites.lst
 
 # Drop the root user and make user 1001 to owner of /etc/squid
 RUN chown -R 1001:1001 /etc/squid
