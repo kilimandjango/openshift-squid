@@ -16,7 +16,7 @@
         {
             "description": "The name for the application.",
             "name": "APPLICATION_NAME",
-            "value": "mySquidProxy"
+            "value": "mysquidproxy"
         },
 	{
 	    "description": "Git source URI for application",
@@ -31,6 +31,21 @@
         }
     ],
     "objects": [
+	 {
+         "kind": "ImageStream",
+         "apiVersion": "v1",
+         "metadata": {
+            "name": "${APPLICATION_NAME}"
+         },
+         "spec": {
+            "dockerImageRepository": "",
+            "tags": [
+               {
+                  "name": "latest"
+               }
+            ]
+         }
+      },
                 {
                         "kind": "BuildConfig",
                         "apiVersion": "v1",
