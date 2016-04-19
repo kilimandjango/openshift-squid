@@ -50,6 +50,7 @@
 			    "from": {
                                 "kind": "ImageStreamTag",
  				"name": "squid-openshift:latest"
+			    }
                           }
                         },
                         "output": {
