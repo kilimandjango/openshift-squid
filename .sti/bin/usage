@@ -1,9 +1,12 @@
 #!/bin/bash -e
-
 cat <<EOF
-This is the squid-centos7 S2I image:
+This is the squid-openshift S2I image:
 To use it, install S2I: https://github.com/openshift/source-to-image
+
 Sample invocation:
 
-// BIG TODO
+s2i build git://<source code> squid-openshift <application image>
+
+You can then run the resulting image via:
+docker run <application image>
 EOF
