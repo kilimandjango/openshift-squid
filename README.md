@@ -3,6 +3,10 @@
 
 **Squid Proxy S2I Docker Image for OpenShift Enterprise v3**
 ========================================================
+ The procedure described in the following steps shows the approach to create a S2I capable Docker image with sourcecode injected from a Git repository. The resulting Docker image can be run on any Docker Daemon or it can be pushed to a private Docker registry and then be referenced by an OpenShift application as an imagestream.
+ 
+ The underlying example is a Squid proxy which can control traffic from other Docker containers to the outside.
+ 
  You can directly use the Git repository, create a Docker builder image and push it to the private Docker registry to create the imagestream. Afterwards you can create a new app in OpenShift and reference the imagestream and the Git repository. The procedure is described in **"How to use the Git repository"**. 
  If you want to create your own application image continue at **"S2I installation routine"**.
 
@@ -69,7 +73,7 @@ Create Docker builder image
  - Test the application image:
 `$ docker run <OUTPUT_APPLICATION_IMAGE_NAME>`
 
-Steps on OpenShift
+Create the application in OpenShift
 ------------------
  - Set up a Git repository with source code and config files in folder /src
  - Optional: Push the local Docker image to the private Docker registry. This way the imagestream is automatically created. The imagestream can then be used in the app creation.
@@ -78,7 +82,23 @@ Steps on OpenShift
  - Create a new application:
  `$ oc new-app <repo_name>/<image_name>~https://github.com/openshift/<repo_name>.git`
  - Check with following command if the application is running:
- `$ oc ge pod`
+ `$ oc get pod`
 
+Use the application in OpenShift
+------------------
+- Log into your project:
+ `$ oc project <project_name>`
+- Get the service ip address of the pod (needed when the application should be accessed by other pods):
+ `$ oc get service`
+- Scale up the application to more replicas (traffic will be distributed over the internal loadbalancer, the pod addresses are stored in the service pool):
+ `$ oc get dc`
+ `$ oc scale up dc <dc_name> --replicas=2`
+
+Configuration of iptables
+------------------
+- Configure iptables to redirect traffic to the Squid proxy:
+`$ iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to 3128 -w`
+- Test the Squid proxy:
+`$ curl --proxy http://<service_ip_addr>:3128 http://www.redhat.com`
  
 
