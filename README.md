@@ -69,7 +69,7 @@ Create Docker builder image
  - Now build the Docker application image (builder image must be present!), the sourcecode can be in local directory or git repo:
 `$ s2i build <sourcecode> <builder_image_name> <output_application_name>` 
  - Test the application image:
-`$ docker run <OUTPUT_APPLICATION_IMAGE_NAME>`
+`$ docker run -p <port>:<port> <OUTPUT_APPLICATION_IMAGE_NAME>`
 
 Create the application in OpenShift
 ------------------
@@ -97,6 +97,6 @@ Configuration of iptables
 - Configure iptables to redirect traffic to the Squid proxy:
 `$ iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to 3128 -w`
 - Test the Squid proxy:
-`$ curl --proxy http://<service_ip_addr>:3128 http://www.redhat.com`
+`$ curl --proxy http://<service_ip_addr>:3128 http://www.google.com`
  
 
