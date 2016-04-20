@@ -1,32 +1,36 @@
-FROM centos:latest
-MAINTAINER kilimandjango
 
-# Set ENV to use in the assemble script
+# squid-openshift
+FROM openshift/base-centos7
 
-# First update OS
-RUN yum -y update
+# TODO: Put the maintainer name in the image metadata
+# MAINTAINER Your Name <your@email.com>
 
-# Now install squid, enable system service and clean up
-RUN yum -y install squid && systemctl enable squid && yum clean -y all
+# TODO: Rename the builder environment variable to inform users about application you provide them
+# ENV BUILDER_VERSION 1.0
 
-# Set labels used in OpenShift to describe the builder images
+# TODO: Set labels used in OpenShift to describe the builder image
+LABEL io.k8s.description="Squid Proxy" \
+      io.k8s.display-name="Squid 3.x" \
+      io.openshift.expose-services="3128:tcp" \
+      io.openshift.tags="builder,squid"
 
-# Although this is defined in openshift/base-centos7 image it's repeated here
-# to make it clear why the following COPY operation is happening
-# Copy the S2I scripts from ./.sti/bin/ to /usr/local/sti
+# TODO: Install required packages here:
+RUN yum install -y squid && systemctl enable squid && yum clean all -y
 
-# Copy custom squid.conf and blockwebsites.lst to conf directory
-COPY ./etc/squid.conf /etc/squid/squid.conf
-COPY ./etc/blockwebsites.lst /etc/squid/blockwebsites.lst
+# TODO (optional): Copy the builder files into /opt/app-root
+# COPY ./<builder_folder>/ /opt/app-root/
 
-# Drop the root user and make user 1001 to owner of /etc/squid
-#RUN chown -R 1001:1001 /etc/squid
+# TODO: Copy the S2I scripts to /usr/libexec/s2i, since openshift/base-centos7 image sets io.openshift.s2i.scripts-url label that way, or update that label
+COPY ./.s2i/bin/ /usr/libexec/s2i
 
-# Set the default user for the image, the user itself was created in the base image
-#USER 1001
+# TODO: Drop the root user and make the content of /opt/app-root owned by user 1001
+# RUN chown -R 1001:1001 /opt/app-root
 
-# Expose container port
+# This default user is created in the openshift/base-centos7 image
+USER 1001
+
+# TODO: Set the default port for applications built using this image
 EXPOSE 3128
 
-# Set the default CMD to print the usage of the image if someone does the docker run
-#CMD ["usage"]
+# TODO: Set the default CMD for the image
+# CMD ["usage"]
