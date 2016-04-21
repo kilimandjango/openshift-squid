@@ -36,19 +36,24 @@ S2I installation routine
 ------------------------
  - Install Docker version 1.8.2 (this version is currently used in OpenShift)
  - Install Go version 1.6.1
-	 - https://storage.googleapis.com/golang/go1.6.1.linux-amd64.tar.gz
+	 - Download recent package:
+https://storage.googleapis.com/golang/go1.6.1.linux-amd64.tar.gz
 	 - Untar Go package:
- `$ tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz`
+`$ tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz`
 	 - Add Go path to /etc/bashrc: 
 `export PATH=$PATH:/usr/local/go/bin`
 	 - Add Go workspace (can be custom) to /etc/bashrc: 
 `export GOPATH=$HOME/work`
 
  - Install S2I:
- `$ go get github.com/openshift/source-to-image`
+	 - Get source-to-image:
+`$ go get github.com/openshift/source-to-image`
+	 - Change to directory (GOPATH must be set before):
 `$ cd ${GOPATH}/src/github.com/openshift/source-to-image`
-  `$ export PATH=$PATH:${GOPATH}/src/github.com/openshift/source-to-image/_output/local/bin/linux/amd64/`
-    `$ hack/build-go.sh`
+	 - Export s2i bin to PATH:
+`$ export PATH=$PATH:${GOPATH}/src/github.com/openshift/source-to-image/_output/local/bin/linux/amd64/`
+	 - This script sets up a go workspace locally and builds all go components:    
+`$ hack/build-go.sh`
 
 Customise Docker builder image
 ---------------------------
