@@ -90,7 +90,7 @@ Use the application in OpenShift
 ------------------
 - Log into your project:	
 `$ oc project <project_name>`
-- Get the service ip address of the pod (needed when the application should be accessed by other pods):	
+- Get the service ip address of the pod (needed when the application should be accessed by other pods):		
 `$ oc get service`
 - Scale up the application to more replicas (traffic will be distributed over the internal loadbalancer, the pod addresses are stored in the service pool):	
 `$ oc get dc`	
@@ -100,7 +100,7 @@ Configuration of iptables
 ------------------
 - Configure iptables to redirect traffic to the Squid proxy:	
 `$ iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to 3128 -w`
-- Test the Squid proxy:	
+- Test the Squid proxy:		
 `$ curl --proxy http://<service_ip_addr>:3128 http://www.google.com`
  
 
