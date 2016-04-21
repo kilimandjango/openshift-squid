@@ -99,13 +99,7 @@ Use the application in OpenShift
 Configuration of proxy in pod, node or (Operation)system wide
 ------------------
 - Proxy settings for pod: Configure pod to redirect traffic to the Squid proxy:		
-``...
-containers:
-- env:
-  - name: "HTTP_PROXY"
-    value: "http://USER:PASSWORD@IPADDR:PORT"
-...``
-
+`$ oc env dc/frontend HTTP_PROXY=http://IPADDR:PORT`
 - Proxy settings for node: Configure node to redirect traffic to the Squid proxy:	
 `export http_proxy=http://squid.squid.<yourdomain>:3128`	
 `export https_proxy=http://squid.squid.<yourdomain>:3128`
