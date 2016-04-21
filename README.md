@@ -106,8 +106,11 @@ Configuration of proxy in pod, node or (Operation)system wide
 - Proxy settings for operation system: Configure iptables to redirect traffic to the Squid proxy:	
 `$ iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to 3128 -w`
 
-
-- Test the Squid proxy:		
+Test the proxy
+------------------
+- You can curl the Squid proxy at its service address in OpenShift:		
 `$ curl --proxy http://<service_ip_addr>:3128 http://www.google.com`
+- Or when you run it on Docker you can test it locally:		
+`$ curl --proxy http://localhost:3128 http://www.google.com`
  
 
