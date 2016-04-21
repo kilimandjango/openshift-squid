@@ -96,13 +96,23 @@ Use the application in OpenShift
 `$ oc get dc`	
 `$ oc scale up dc <dc_name> --replicas=2`
 
-Configuration of nodes or iptables
+Configuration of proxy in pod, node or (Operation)system wide
 ------------------
-- Redirect traffic on OpenShift level: Configure node to redirect traffic to the Squid proxy:	
+- Proxy settings for pod: Configure pod to redirect traffic to the Squid proxy:		
+``...
+containers:
+- env:
+  - name: "HTTP_PROXY"
+    value: "http://USER:PASSWORD@IPADDR:PORT"
+...``
+
+- Proxy settings for node: Configure node to redirect traffic to the Squid proxy:	
 `export http_proxy=http://squid.squid.<yourdomain>:3128`	
 `export https_proxy=http://squid.squid.<yourdomain>:3128`
-- Redirect traffic on OS level: Configure iptables to redirect traffic to the Squid proxy:	
+- Proxy settings for operation system: Configure iptables to redirect traffic to the Squid proxy:	
 `$ iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to 3128 -w`
+
+
 - Test the Squid proxy:		
 `$ curl --proxy http://<service_ip_addr>:3128 http://www.google.com`
  
