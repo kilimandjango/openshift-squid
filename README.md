@@ -79,11 +79,11 @@ Create the application in OpenShift
 ------------------
  - Set up a Git repository with source code and config files in folder /src
  - Optional: Push the local Docker image to the private Docker registry. This way the imagestream is automatically created. The imagestream can then be used in the app creation.
- - Create a new project:
+ - Create a new project:	
  `$ oc new-project <project_name>`
- - Create a new application:
+ - Create a new application:	
  `$ oc new-app <repo_name>/<image_name>~https://github.com/openshift/<repo_name>.git`
- - Check with following command if the application is running:
+ - Check with following command if the application is running:	
  `$ oc get pod`
 
 Use the application in OpenShift
@@ -92,7 +92,7 @@ Use the application in OpenShift
 `$ oc project <project_name>`
 - Get the service ip address of the pod (needed when the application should be accessed by other pods):		
 `$ oc get service`
-- Scale up the application to more replicas (traffic will be distributed over the internal loadbalancer, the pod addresses are stored in the service pool):	
+- Scale up the application to more replicas (traffic will be distributed over the internal loadbalancer, the pod addresses are stored in the service pool):		
 `$ oc get dc`	
 `$ oc scale up dc <dc_name> --replicas=2`
 
