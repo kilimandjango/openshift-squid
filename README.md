@@ -71,7 +71,7 @@ Create Docker builder image
 ---------------------------
  - Build the Docker builder image:	
  `$ docker build -t <BUILDER_IMAGE_NAME>`
- - Now build the Docker application image (builder image must be present!), the sourcecode can be in local directory or git repo:	`$ s2i build <sourcecode> <builder_image_name> <output_application_name>` 
+ - Now build the Docker application image (builder image must be present!), the sourcecode can be in local directory or Git repo:		`$ s2i build <sourcecode> <builder_image_name> <output_application_name>` 
  - Test the application image:	
  `$ docker run -p <port>:<port> <OUTPUT_APPLICATION_IMAGE_NAME>`
 
