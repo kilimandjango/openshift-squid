@@ -88,8 +88,8 @@ Create the application in OpenShift
 
 Use the application in OpenShift
 ------------------
-- Log into your project:	
-`$ oc project <project_name>`
+- Log into project default:	
+`$ oc project default`
 - Get the service ip address of the pod (needed when the application should be accessed by other pods):		
 `$ oc get service`
 - Scale up the application to more replicas (traffic will be distributed over the internal loadbalancer, the pod addresses are stored in the service pool):		
