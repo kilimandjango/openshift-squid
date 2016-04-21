@@ -57,14 +57,14 @@ https://storage.googleapis.com/golang/go1.6.1.linux-amd64.tar.gz
 
 Customise Docker builder image
 ---------------------------
- - Create the S2I structure with all mandatory files in a target directory:	
+ - Create the S2I structure with all mandatory files in a target directory:		
 `$ S2I create <builder_image_name> <target_directory>`
  
- - Edit the Dockerfile according to your needs, e.g.:	
+ - Edit the Dockerfile according to your needs, e.g.:		
 `yum install <package> && yum update && yum clean all -y`
  
  - Edit .sti/bin/assemble file, copy config files, etc..
- - Edit .sti/bin/run file, start up the application, e.g.:	
+ - Edit .sti/bin/run file, start up the application, e.g.:		
 `exec squid -f /etc/squid/squid.conf -N` 
 
 Create Docker builder image
