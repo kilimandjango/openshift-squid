@@ -98,9 +98,9 @@ Use the application in OpenShift
 
 Configuration of nodes or iptables
 ------------------
-- Redirect traffic on OpenShift level: Configure node to redirect traffic to the Squid proxy:
-`export http_proxy=http://squid.squid.svc.cluster.local:3128`
-`export https_proxy=http://squid.squid.svc.cluster.local:3128`
+- Redirect traffic on OpenShift level: Configure node to redirect traffic to the Squid proxy:	
+`export http_proxy=http://squid.squid.<yourdomain>:3128`	
+`export https_proxy=http://squid.squid.<yourdomain>:3128`
 - Redirect traffic on OS level: Configure iptables to redirect traffic to the Squid proxy:	
 `$ iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to 3128 -w`
 - Test the Squid proxy:		
