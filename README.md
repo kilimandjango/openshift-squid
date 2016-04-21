@@ -24,9 +24,9 @@ What is inside the git repository
 How to use the Git repository
 -----------------------------
  1. Clone the git repository:
- `$ git clone https://github.com/<repo_name>`
+`$ git clone https://github.com/<repo_name>`
  2. Build the Docker builder image:
- `$ docker build -t <docker_image>`
+`$ docker build -t <docker_image>`
  3. Push the Docker builder image to the private Docker registry to create a new imagestream.
  4. Create a new application in Openshift and reference the imagestream (created in step 3) and the git repository:
 `$ oc new-app <repo_name>/<image_name>~https://github.com/openshift/<repo_name>.git`
@@ -58,14 +58,14 @@ https://storage.googleapis.com/golang/go1.6.1.linux-amd64.tar.gz
 Customise Docker builder image
 ---------------------------
  - Create the S2I structure with all mandatory files in a target directory:
- `$ S2I create <builder_image_name> <target_directory>`
+`$ S2I create <builder_image_name> <target_directory>`
  
  - Edit the Dockerfile according to your needs, e.g.:
- `yum install <package> && yum update && yum clean all -y`
+`yum install <package> && yum update && yum clean all -y`
  
  - Edit .sti/bin/assemble file, copy config files, etc..
  - Edit .sti/bin/run file, start up the application, e.g.:
- `exec squid -f /etc/squid/squid.conf -N` 
+`exec squid -f /etc/squid/squid.conf -N` 
 
 Create Docker builder image
 ---------------------------
