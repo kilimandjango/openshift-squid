@@ -1,5 +1,5 @@
 
-IMAGE_NAME = squid-openshift
+IMAGE_NAME = squid-openshift-builder
 
 build:
 	docker build -t $(IMAGE_NAME) .
