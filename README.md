@@ -23,12 +23,12 @@ What is inside the git repository
 
 How to use the Git repository
 -----------------------------
- 1. Clone the git repository:
+ 1. Clone the git repository:	
 `$ git clone https://github.com/<repo_name>`
- 2. Build the Docker builder image:
+ 2. Build the Docker builder image:	
 `$ docker build -t <docker_image>`
- 3. Push the Docker builder image to the private Docker registry to create a new imagestream.
- 4. Create a new application in Openshift and reference the imagestream (created in step 3) and the git repository:
+ 3. Push the Docker builder image to the private Docker registry to create a new imagestream (see https://docs.openshift.com/enterprise/3.1/install_config/install/docker_registry.html#access-pushing-and-pulling-images)
+ 4. Create a new application in Openshift and reference the imagestream (created in step 3) and the git repository:	
 `$ oc new-app <repo_name>/<image_name>~https://github.com/openshift/<repo_name>.git`
   
 
@@ -38,17 +38,17 @@ S2I installation routine
  - Install Go version 1.6.1
 	 - Download recent package:
 https://storage.googleapis.com/golang/go1.6.1.linux-amd64.tar.gz
-	 - Untar Go package:
+	 - Untar Go package:	
 `$ tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz`
-	 - Add Go path to /etc/bashrc: 
+	 - Add Go path to /etc/bashrc:	
 `export PATH=$PATH:/usr/local/go/bin`
-	 - Add Go workspace (can be custom) to /etc/bashrc: 
+	 - Add Go workspace (can be custom) to /etc/bashrc:	
 `export GOPATH=$HOME/work`
 
  - Install S2I:
-	 - Get source-to-image:
+	 - Get source-to-image:	
 `$ go get github.com/openshift/source-to-image`
-	 - Change to directory (GOPATH must be set before):
+	 - Change to directory (GOPATH must be set before):	
 `$ cd ${GOPATH}/src/github.com/openshift/source-to-image`
 	 - Export s2i bin to PATH:	
 `$ export PATH=$PATH:${GOPATH}/src/github.com/openshift/source-to-image/_output/local/bin/linux/amd64/`
@@ -57,23 +57,22 @@ https://storage.googleapis.com/golang/go1.6.1.linux-amd64.tar.gz
 
 Customise Docker builder image
 ---------------------------
- - Create the S2I structure with all mandatory files in a target directory:
+ - Create the S2I structure with all mandatory files in a target directory:	
 `$ S2I create <builder_image_name> <target_directory>`
  
- - Edit the Dockerfile according to your needs, e.g.:
+ - Edit the Dockerfile according to your needs, e.g.:	
 `yum install <package> && yum update && yum clean all -y`
  
  - Edit .sti/bin/assemble file, copy config files, etc..
- - Edit .sti/bin/run file, start up the application, e.g.:
+ - Edit .sti/bin/run file, start up the application, e.g.:	
 `exec squid -f /etc/squid/squid.conf -N` 
 
 Create Docker builder image
 ---------------------------
- - Build the Docker builder image:
+ - Build the Docker builder image:	
 `$ docker build -t <BUILDER_IMAGE_NAME>`
- - Now build the Docker application image (builder image must be present!), the sourcecode can be in local directory or git repo:
-`$ s2i build <sourcecode> <builder_image_name> <output_application_name>` 
- - Test the application image:
+ - Now build the Docker application image (builder image must be present!), the sourcecode can be in local directory or git repo:	`$ s2i build <sourcecode> <builder_image_name> <output_application_name>` 
+ - Test the application image:	
 `$ docker run -p <port>:<port> <OUTPUT_APPLICATION_IMAGE_NAME>`
 
 Create the application in OpenShift
@@ -89,19 +88,19 @@ Create the application in OpenShift
 
 Use the application in OpenShift
 ------------------
-- Log into your project:
- `$ oc project <project_name>`
-- Get the service ip address of the pod (needed when the application should be accessed by other pods):
- `$ oc get service`
-- Scale up the application to more replicas (traffic will be distributed over the internal loadbalancer, the pod addresses are stored in the service pool):
- `$ oc get dc`
- `$ oc scale up dc <dc_name> --replicas=2`
+- Log into your project:	
+`$ oc project <project_name>`
+- Get the service ip address of the pod (needed when the application should be accessed by other pods):	
+`$ oc get service`
+- Scale up the application to more replicas (traffic will be distributed over the internal loadbalancer, the pod addresses are stored in the service pool):	
+`$ oc get dc`	
+`$ oc scale up dc <dc_name> --replicas=2`
 
 Configuration of iptables
 ------------------
-- Configure iptables to redirect traffic to the Squid proxy:
+- Configure iptables to redirect traffic to the Squid proxy:	
 `$ iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to 3128 -w`
-- Test the Squid proxy:
+- Test the Squid proxy:	
 `$ curl --proxy http://<service_ip_addr>:3128 http://www.google.com`
  
 
