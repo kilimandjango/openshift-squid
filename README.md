@@ -73,16 +73,16 @@ Create Docker builder image
  `$ docker build -t <BUILDER_IMAGE_NAME>`
  - Now build the Docker application image (builder image must be present!), the sourcecode can be in local directory or Git repo:		`$ s2i build <sourcecode> <builder_image_name> <output_application_name>` 
  - Test the application image:	
- `$ docker run -p <port>:<port> <OUTPUT_APPLICATION_IMAGE_NAME>`
+ `$ docker run -p <port>:<port> <output_application_name>`
 
 Create the application in OpenShift
 ------------------
  - Set up a Git repository with source code and config files in folder /src
  - Optional: Push the local Docker image to the private Docker registry. This way the imagestream is automatically created. The imagestream can then be used in the app creation.
- - Create a new project:	
- `$ oc new-project <project_name>`
+ - Go to project default to create the new app. Project default pods can be accessed by every pod:	
+ `$ oc project default`
  - Create a new application:	
- `$ oc new-app <repo_name>/<image_name>~https://github.com/openshift/<repo_name>.git`
+ `$ oc new-app <repo_name>/<output_application_name>~https://github.com/openshift/<repo_name>.git`
  - Check with following command if the application is running:	
  `$ oc get pod`
 
@@ -96,9 +96,12 @@ Use the application in OpenShift
 `$ oc get dc`	
 `$ oc scale up dc <dc_name> --replicas=2`
 
-Configuration of iptables
+Configuration of nodes or iptables
 ------------------
-- Configure iptables to redirect traffic to the Squid proxy:	
+- Redirect traffic on OpenShift level: Configure node to redirect traffic to the Squid proxy:
+`export http_proxy=http://squid.squid.svc.cluster.local:3128`
+`export https_proxy=http://squid.squid.svc.cluster.local:3128`
+- Redirect traffic on OS level: Configure iptables to redirect traffic to the Squid proxy:	
 `$ iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to 3128 -w`
 - Test the Squid proxy:		
 `$ curl --proxy http://<service_ip_addr>:3128 http://www.google.com`
