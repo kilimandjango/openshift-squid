@@ -39,41 +39,41 @@ S2I installation routine
 	 - Download recent package:
 https://storage.googleapis.com/golang/go1.6.1.linux-amd64.tar.gz
 	 - Untar Go package:	
-`$ tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz`
+	 `$ tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz`
 	 - Add Go path to /etc/bashrc:	
-`export PATH=$PATH:/usr/local/go/bin`
+	 `export PATH=$PATH:/usr/local/go/bin`
 	 - Add Go workspace (can be custom) to /etc/bashrc:	
-`export GOPATH=$HOME/work`
+	 `export GOPATH=$HOME/work`
 
  - Install S2I:
-	 - Get source-to-image:		
-`$ go get github.com/openshift/source-to-image`
+	 - Get source-to-image:	
+	 `$ go get github.com/openshift/source-to-image`
 	 - Change to directory (GOPATH must be set before):	
-`$ cd ${GOPATH}/src/github.com/openshift/source-to-image`
-	 - Export s2i bin to PATH:		
-`$ export PATH=$PATH:${GOPATH}/src/github.com/openshift/source-to-image/_output/local/bin/linux/amd64/`
-	 - This script sets up a go workspace locally and builds all go components:    
-`$ hack/build-go.sh`
+	 `$ cd ${GOPATH}/src/github.com/openshift/source-to-image`
+	 - Export s2i bin to PATH:	
+	 `$ export PATH=$PATH:${GOPATH}/src/github.com/openshift/source-to-image/_output/local/bin/linux/amd64/`
+	 - This script sets up a go workspace locally and builds all go components:	
+	 `$ hack/build-go.sh`
 
 Customise Docker builder image
 ---------------------------
- - Create the S2I structure with all mandatory files in a target directory:		
-`$ S2I create <builder_image_name> <target_directory>`
+ - Create the S2I structure with all mandatory files in a target directory:	
+ `$ S2I create <builder_image_name> <target_directory>`
  
- - Edit the Dockerfile according to your needs, e.g.:		
-`yum install <package> && yum update && yum clean all -y`
+ - Edit the Dockerfile according to your needs, e.g.:	
+ `yum install <package> && yum update && yum clean all -y`
  
  - Edit .sti/bin/assemble file, copy config files, etc..
- - Edit .sti/bin/run file, start up the application, e.g.:		
-`exec squid -f /etc/squid/squid.conf -N` 
+ - Edit .sti/bin/run file, start up the application, e.g.:	
+ `exec squid -f /etc/squid/squid.conf -N` 
 
 Create Docker builder image
 ---------------------------
  - Build the Docker builder image:	
-`$ docker build -t <BUILDER_IMAGE_NAME>`
+ `$ docker build -t <BUILDER_IMAGE_NAME>`
  - Now build the Docker application image (builder image must be present!), the sourcecode can be in local directory or git repo:	`$ s2i build <sourcecode> <builder_image_name> <output_application_name>` 
  - Test the application image:	
-`$ docker run -p <port>:<port> <OUTPUT_APPLICATION_IMAGE_NAME>`
+ `$ docker run -p <port>:<port> <OUTPUT_APPLICATION_IMAGE_NAME>`
 
 Create the application in OpenShift
 ------------------
