@@ -80,7 +80,7 @@ Create Docker builder image
 
 Create the application in OpenShift
 ------------------
- - Set up a Git repository with source code and config files in folder /src
+ - Set up a Git repository with source code and config files in root directory.
  - Optional: Push the local Docker image to the private Docker registry. This way the imagestream is automatically created. The imagestream can then be used in the app creation.
  - Go to project default to create the new app. Project default pods can be accessed by every pod:	
  `$ oc project default`
