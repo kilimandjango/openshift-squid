@@ -1,14 +1,14 @@
 
 
 
-**Squid Proxy S2I Docker Image for OpenShift Enterprise v3**
+**Squid Proxy s2i image for OpenShift v3**
 ========================================================
- The procedure described in the following steps shows the approach to create a S2I capable Docker image with sourcecode injected from a Git repository. The resulting Docker image can be run on any Docker Daemon or it can be pushed to a private Docker registry and then be referenced by an OpenShift application as an imagestream.
+ The procedure described in the following steps shows the approach to create a s2i (Source-to-image) ready-to-run Docker image with sourcecode injected from a Git repository. This Docker image can be run on any Docker Daemon or it can be pushed to a private Docker registry and then be referenced by an OpenShift application as an imagestream.
  
- The underlying example is a Squid proxy which can control traffic from other Docker containers to the outside.
+ The underlying example is a Squid proxy which can proxy traffic from other Docker containers to the outside. The config file squid.conf can be put in a Git repository and injected when the s2i build process is started. There is also a whitelist which is referenced by the squid.conf.
  
- You can directly use the Git repository, create a Docker builder image and push it to the private Docker registry to create the imagestream. Afterwards you can create a new app in OpenShift and reference the imagestream and the Git repository. The procedure is described in **"How to use the Git repository"**. 
- If you want to create your own application image continue at **"S2I installation routine"**.
+ There are two options. The first one is to clone this Git repository and run the Makefile to create a Docker builder image.  You can push this builder image to the private Docker registry in OpenShift to create an imagestream. Afterwards you can create a new app in OpenShift and reference the imagestream and the Git repository. The procedure is described in **"How to use the Git repository"**. 
+ The other option is two download the s2i standalone tool and run s2i create to get a s2i structure which can be configured according to the application which shall be created. If you want to create your own application image continue at **"S2I installation routine"**.
 
 What is inside the git repository
 ---------------------------------
@@ -26,24 +26,27 @@ How to use the Git repository
  1. Clone the git repository:	
 `$ git clone https://github.com/<repo_name>`
  2. Build the Docker builder image:	
-`$ docker build -t <docker_image>`
- 3. Push the Docker builder image to the private Docker registry to create a new imagestream (see https://docs.openshift.com/enterprise/3.1/install_config/install/docker_registry.html#access-pushing-and-pulling-images)
+`$ docker build -t <docker_image>` or just run the Makefile (image name can be configured).
+ 3. Push the Docker builder image to the private OpenShift Docker registry to create a new imagestream (see https://docs.openshift.com/enterprise/3.1/install_config/install/docker_registry.html#access-pushing-and-pulling-images)
  4. Create a new application in Openshift and reference the imagestream (created in step 3) and the git repository:	
 `$ oc new-app <repo_name>/<image_name>~https://github.com/openshift/<repo_name>.git`
-  
+ 5. Check your application in the web UI or over cli:
+`$ oc get pod`
 
 S2I installation routine
 ------------------------
  - Install Docker version 1.8.2 (this version is currently used in OpenShift)
- - Install Go version 1.6.1
+ - Install Go version >= 1.6.x
 	 - Download recent package:
-https://storage.googleapis.com/golang/go1.6.1.linux-amd64.tar.gz
+https://storage.googleapis.com/golang/go$VERSION.$OS-$ARCH.tar.gz
 	 - Untar Go package:	
 	 `$ tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz`
 	 - Add Go path to /etc/bashrc:	
 	 `export PATH=$PATH:/usr/local/go/bin`
 	 - Add Go workspace (can be custom) to /etc/bashrc:	
 	 `export GOPATH=$HOME/work`
+	 - Check if Go is correctly installed:
+	 `go version`
 
  - Install S2I:
 	 - Get source-to-image:	
@@ -70,7 +73,7 @@ Customise Docker builder image
 Create Docker builder image
 ---------------------------
  - Build the Docker builder image:	
- `$ docker build -t <BUILDER_IMAGE_NAME>`
+ `$ docker build -t <builder_image_name>`
  - Now build the Docker application image (builder image must be present!), the sourcecode can be in local directory or Git repo:		`$ s2i build <sourcecode> <builder_image_name> <output_application_name>` 
  - Test the application image:	
  `$ docker run -p <port>:<port> <output_application_name>`
@@ -96,7 +99,7 @@ Use the application in OpenShift
 `$ oc get dc`	
 `$ oc scale up dc <dc_name> --replicas=2`
 
-Configuration of proxy in pod, node or (Operation)system wide
+Configuration of proxy in pod, node or (operation) system wide
 ------------------
 - Proxy settings for pod: Configure pod to redirect traffic to the Squid proxy:		
 `$ oc env dc/frontend HTTP_PROXY=http://IPADDR:PORT`
