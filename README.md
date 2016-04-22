@@ -33,7 +33,7 @@ How to use the Git repository
  5. Check your application in the web UI or over cli:
 `$ oc get pod`
 
-S2I installation routine
+s2i installation routine
 ------------------------
  - Install Docker version 1.8.2 (this version is currently used in OpenShift)
  - Install Go version >= 1.6.x
@@ -48,7 +48,7 @@ https://storage.googleapis.com/golang/go$VERSION.$OS-$ARCH.tar.gz
 	 - Check if Go is correctly installed:
 	 `go version`
 
- - Install S2I:
+ - Install s2i:
 	 - Get source-to-image:	
 	 `$ go get github.com/openshift/source-to-image`
 	 - Change to directory (GOPATH must be set before):	
@@ -60,7 +60,7 @@ https://storage.googleapis.com/golang/go$VERSION.$OS-$ARCH.tar.gz
 
 Customise Docker builder image
 ---------------------------
- - Create the S2I structure with all mandatory files in a target directory:	
+ - Create the s2i structure with all mandatory files in a target directory:	
  `$ S2I create <builder_image_name> <target_directory>`
  
  - Edit the Dockerfile according to your needs, e.g.:	
