@@ -34,7 +34,7 @@ RUN chmod -R 775 /var/log/squid
 
 
 # This default user is created in the openshift/base-centos7 image
-USER 1001
+USER squid
 
 RUN echo squid -v
 
