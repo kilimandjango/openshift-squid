@@ -66,8 +66,8 @@ Customise Docker builder image
  - Edit the Dockerfile according to your needs, e.g.:	
  `yum install <package> && yum update && yum clean all -y`
  
- - Edit .sti/bin/assemble file, copy config files, etc..
- - Edit .sti/bin/run file, start up the application, e.g.:	
+ - Edit .s2i/bin/assemble file, copy config files, etc..
+ - Edit .s2i/bin/run file, start up the application, e.g.:	
  `exec squid -f /etc/squid/squid.conf -N` 
 
 Create Docker builder image
