@@ -39,7 +39,7 @@ USER squid
 RUN echo squid -v
 
 # TODO: Set the default port for applications built using this image
-EXPOSE 3128/tcp
+EXPOSE 3128
 
 VOLUME ["${SQUID_CACHE_DIR}"]
 
