@@ -27,7 +27,7 @@ How to use the Git repository
 `$ git clone https://github.com/<repo_name>`
  2. Build the Docker builder image:	
 `$ docker build -t <docker_image>` or just run the Makefile (image name can be configured).
- 3. Push the Docker builder image to the private OpenShift Docker registry to create a new imagestream (see https://docs.openshift.com/enterprise/3.1/install_config/install/docker_registry.html#access-pushing-and-pulling-images)
+ 3. Push the Docker builder image to the private OpenShift Docker registry to create a new imagestream (see https://docs.openshift.org/latest/install_config/registry/accessing_registry.html#access)
  4. Create a new application in Openshift and reference the imagestream (created in step 3) and the git repository:	
 `$ oc new-app <repo_name>/<image_name>~https://github.com/openshift/<repo_name>.git`
  5. Check your application in the web UI or over cli:
@@ -35,16 +35,10 @@ How to use the Git repository
 
 s2i installation routine
 ------------------------
- - Install Docker version 1.8.2 (this version is currently used in OpenShift)
- - Install Go version >= 1.6.x
-	 - Download recent package:
-https://storage.googleapis.com/golang/go$VERSION.$OS-$ARCH.tar.gz
-	 - Untar Go package:	
-	 `$ tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz`
-	 - Add Go path to /etc/bashrc:	
-	 `export PATH=$PATH:/usr/local/go/bin`
-	 - Add Go workspace (can be custom) to /etc/bashrc:	
-	 `export GOPATH=$HOME/work`
+ - Install Docker version 1.12.6 (this version is currently used in OpenShift)
+ - Install Go version 1.8.x
+	 - Install via yum installer:
+	 `$ sudo yum install go`
 	 - Check if Go is correctly installed:
 	 `go version`
 
