@@ -26,7 +26,7 @@ How to use the Git repository
  1. Clone the git repository:	
 `$ git clone https://github.com/<repo_name>`
  2. Build the Docker builder image:	
-`$ docker build -t <docker_image>` or just run the Makefile (image name can be configured).
+`$ docker build -t <docker_image> .` or just run the Makefile (image name can be configured).
  3. Push the Docker builder image to the private OpenShift Docker registry to create a new imagestream (see https://docs.openshift.org/latest/install_config/registry/accessing_registry.html#access)
  4. Create a new application in Openshift and reference the imagestream (created in step 3) and the git repository:	
 `$ oc new-app <repo_name>/<image_name>~https://github.com/openshift/<repo_name>.git`
