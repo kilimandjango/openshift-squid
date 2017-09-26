@@ -21,7 +21,7 @@ What is inside the git repository
  - Dockerfile
  - Makefile
 
-How to use the Git repository
+How to use the Git repository (Summary of the following steps)
 -----------------------------
  1. Clone the git repository:	
 `$ git clone https://github.com/<repo_name>`
@@ -67,7 +67,7 @@ Customise Docker builder image
 Create Docker builder image
 ---------------------------
  - Build the Docker builder image:	
- `$ docker build -t <builder_image_name>`
+ `$ docker build -t <builder_image_name> .`
  - Now build the Docker application image (builder image must be present!), the sourcecode can be in local directory or Git repo:		`$ s2i build <sourcecode> <builder_image_name> <output_application_name>` 
  - Test the application image:	
  `$ docker run -p <port>:<port> <output_application_name>`
