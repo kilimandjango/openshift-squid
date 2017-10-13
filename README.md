@@ -36,21 +36,20 @@ How to use the Git repository (Summary of the following steps)
 s2i installation routine
 ------------------------
  - Install Docker version 1.12.6 (this version is currently used in OpenShift)
- - Install Go version 1.8.x
+ - Install Go latest version
 	 - Install via yum installer:
 	 `$ sudo yum install go`
 	 - Check if Go is correctly installed:
 	 `go version`
 
  - Install s2i:
-	 - Get source-to-image:	
-	 `$ go get github.com/openshift/source-to-image`
-	 - Change to directory (GOPATH must be set before):	
-	 `$ cd ${GOPATH}/src/github.com/openshift/source-to-image`
-	 - Export s2i bin to PATH:	
-	 `$ export PATH=$PATH:${GOPATH}/src/github.com/openshift/source-to-image/_output/local/bin/linux/amd64/`
-	 - This script sets up a go workspace locally and builds all go components:	
-	 `$ hack/build-go.sh`
+	 - Download source-to-image at https://github.com/openshift/source-to-image/releases	
+	 - Untar:	
+	 `$ tar -xvf release.tar.gz /home/user/source2image`
+	 - Export s2i bin to PATH	
+	 `$ export S2IPATH=/home/user/source2image`
+	 - Check version:	
+	 `$ s2i version`
 
 Customise Docker builder image
 ---------------------------
